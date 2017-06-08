@@ -1,0 +1,12 @@
+#tp5 origin
+.idea
+composer.lock
+*.log
+thinkphp
+
+#zendstudio
+.settings
+.buildpath
+.project
+
+#this project
