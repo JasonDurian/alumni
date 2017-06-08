@@ -10,3 +10,4 @@ thinkphp
 .project
 
 #this project
+config/database.php
