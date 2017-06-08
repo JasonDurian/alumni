@@ -1,30 +1,60 @@
-ThinkPHP 5.0
+Alumni(Dva+TP5)
 ===============
 
-[![Total Downloads](https://poser.pugx.org/topthink/think/downloads)](https://packagist.org/packages/topthink/think)
-[![Latest Stable Version](https://poser.pugx.org/topthink/think/v/stable)](https://packagist.org/packages/topthink/think)
-[![Latest Unstable Version](https://poser.pugx.org/topthink/think/v/unstable)](https://packagist.org/packages/topthink/think)
-[![License](https://poser.pugx.org/topthink/think/license)](https://packagist.org/packages/topthink/think)
+## Now Begin
 
-ThinkPHP5在保持快速开发和大道至简的核心理念不变的同时，PHP版本要求提升到5.4，对已有的CBD模式做了更深的强化，优化核心，减少依赖，基于全新的架构思想和命名空间实现，是ThinkPHP突破原有框架思路的颠覆之作，其主要特性包括：
+First:
 
- + 基于命名空间和众多PHP新特性
- + 核心功能组件化
- + 强化路由功能
- + 更灵活的控制器
- + 重构的模型和数据库类
- + 配置文件可分离
- + 重写的自动验证和完成
- + 简化扩展机制
- + API支持完善
- + 改进的Log类
- + 命令行访问支持
- + REST支持
- + 引导文件支持
- + 方便的自动生成定义
- + 真正惰性加载
- + 分布式环境支持
- + 更多的社交类库
+Second:
+1) add 'database.php' to 'config/'
+2) modify 'XXX' in the 'database.php'
+
+database.php:
+
+~~~
+return [
+    // 数据库类型
+    'type'            => 'mysql',
+    // 服务器地址
+    'hostname'        => 'XXX',
+    // 数据库名
+    'database'        => 'XXX',
+    // 用户名
+    'username'        => 'XXX',
+    // 密码
+    'password'        => 'XXX',
+    // 端口
+    'hostport'        => 'XXX',
+    // 连接dsn
+    'dsn'             => '',
+    // 数据库连接参数
+    'params'          => [],
+    // 数据库编码默认采用utf8
+    'charset'         => 'utf8',
+    // 数据库表前缀
+    'prefix'          => 'XXX',
+    // 数据库调试模式
+    'debug'           => true,
+    // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+    'deploy'          => 0,
+    // 数据库读写是否分离 主从式有效
+    'rw_separate'     => false,
+    // 读写分离后 主服务器数量
+    'master_num'      => 1,
+    // 指定从服务器序号
+    'slave_no'        => '',
+    // 是否严格检查字段是否存在
+    'fields_strict'   => true,
+    // 数据集返回类型
+    'resultset_type'  => 'array',
+    // 自动写入时间戳字段
+    'auto_timestamp'  => false,
+    // 时间字段取出后的默认时间格式
+    'datetime_format' => 'Y-m-d H:i:s',
+    // 是否需要进行SQL性能分析
+    'sql_explain'     => false,
+];
+~~~
 
 > ThinkPHP5的运行环境要求PHP5.4以上。
 
