@@ -12,8 +12,13 @@ class MemberComment extends ApiCommon
     protected function _initialize()
     {
         parent::_initialize();
+        
+        if (empty($this->userCache['id'])) {
+            exit(json_encode(['code'=>400, 'error'=>'此功能暂不对非认证用户开放']));
+        }
+        
         $this->member_comment_model = model('MemberComment');
-        $this->commenter_id = empty($this->userCache['member_id']) ? '' : $this->userCache['member_id'];
+        $this->commenter_id = $this->userCache['member_id'];            //评论人一定是现在登录的用户
         
         // 更新缓存 为了释放不用的内存
         cache('Auth_'.$this->authKey, $this->userCache, config('login_session_vaild'));

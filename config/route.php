@@ -14,9 +14,17 @@ return [
 		'member'	=> 'index/member',
         'certify'   => 'index/memberCertified',
         'comment'   => 'index/memberComment',
-        'contact'   => 'index/contact'
+        'contact'   => 'index/contact',
+        'square'    => 'index/square'
 	],
     // 【基础】登录
     'member/login' => ['index/base/login', ['method' => 'POST']],
+    // 广场获取用户
+    'square/squareuser' => ['index/square/squareUser', ['method' => 'GET']],
+    // 广场添加留言
+    'square/comment' => ['index/square/comment', ['method' => 'POST']],
+    
+    // MISS路由
+    '__miss__'  => 'index/base/miss',
 
 ];

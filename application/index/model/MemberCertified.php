@@ -14,6 +14,24 @@ class MemberCertified extends Model
     ];
     
     /**
+     * 与用户表的一对一模型（主从表之间的数据会有从属关系）
+     * @return \think\model\relation\BelongsTo
+     */
+    /*public function member()
+    {
+        return $this->belongsTo('Member','member_id','member_id')->field('avatar');
+    }*/
+    
+    /**
+     * 视图查询范围
+     * @param unknown $query
+     */
+    protected function scopeMember($query)
+    {
+        $query->view('Member','avatar');
+    }
+    
+    /**
      * 认证
      * @param  array   $param  [description]
      */
@@ -66,17 +84,24 @@ class MemberCertified extends Model
      */
     public function getFullDataById($member_id = '')
     {
+//         $data = $this
+// 		      ->alias('a')
+// 		      ->field('avatar,name,city,mobile,hide_mobile,email,wechat,qq,department,grade,work,company,position')
+// 		      ->join('__MEMBER__ c','a.member_id=c.member_id')
+// 		      ->where(['a.member_id'=>$member_id])
+//            ->find();
+
         $data = $this
-		      ->alias('a')
-		      ->field('name,avatar,city,mobile,hide_mobile,email,wechat,qq,department,grade,work,company,position')
-		      ->join('__MEMBER__ c','a.member_id=c.member_id')
-		      ->where(['a.member_id'=>$member_id])
-              ->find();
+            ->scope('member')
+	        ->view('MemberCertified','name,city,mobile,hide_mobile,email,wechat,qq,department,grade,work,company,position','MemberCertified.member_id=Member.member_id')
+            ->where(['Member.member_id' => $member_id, 'Member.status' => 1])
+            ->find();
         
         if (!$data) {
             $this->error = '暂无此数据';
             return false;
         }
+       
         return $data;
     }
     
@@ -90,9 +115,9 @@ class MemberCertified extends Model
      * @param     [number]                   $limit    [每页数量]
      * @return    [array]                             [description]
      */
-public function getDataList($type_id, $param, $page, $limit)
+    public function getDataList($type_id, $param, $page, $limit)
 	{
-		$map = [];
+		$map = ['Member.status'=>1];
 		if ($type_id && $param) {
     		switch ($type_id) {
     		    case 1: $map['department'] = $param; break;
@@ -115,13 +140,18 @@ public function getDataList($type_id, $param, $page, $limit)
 		}
 		
 		if (!empty($cacheName)) {
-		    $dataCount = $this->where($map)->cache($cacheName, 300)->count('id');       //将符合条件的列表总数缓存5分钟
+		    $dataCount = $this->where(['status'=>1])->cache($cacheName, 300)->count('id');       //将符合条件的列表总数缓存5分钟
 		}
 		
+// 		$list = $this
+// 		      ->alias('a')
+// 		      ->field('avatar,a.member_id,name,department,grade,company,position')
+// 		      ->join('__MEMBER__ c','a.member_id=c.member_id')
+// 		      ->where($map);
+		
 		$list = $this
-		      ->alias('a')
-		      ->field('a.member_id,name,avatar,department,grade,company,position')
-		      ->join('__MEMBER__ c','a.member_id=c.member_id')
+		      ->scope('member')
+		      ->view('MemberCertified','member_id,name,department,grade,company,position','MemberCertified.member_id=Member.member_id')
 		      ->where($map);
 		
 		if ($page && $limit) {                                        // 若有分页

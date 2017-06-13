@@ -23,11 +23,11 @@ class MemberCertified extends ApiCommon
      */
     public function index()
     {
-        $id = empty($this->userCache['id']) ? '' : $this->userCache['id'];
-        $data = $this->updateCache($id);
-        if (!$data) {
-            return resultArray(['error' => $this->member_certified_model->getError()]);
-        }
+//         $id = empty($this->userCache['id']) ? '' : $this->userCache['id'];
+        $data = $this->updateCache();                                                       //读取cache中的用户信息
+//         if (!$data) {
+//             return resultArray(['error' => $this->member_certified_model->getError()]);
+//         }
         return resultArray(['data' => $data]);
     }
 
@@ -130,7 +130,7 @@ class MemberCertified extends ApiCommon
      * @param int $id
      * @return array|bool 更新过后的用户信息
      */
-    protected function updateCache($id)
+    protected function updateCache($id = '')
     {
         if (!empty($id)) {
             $data = $this->member_certified_model->getDataById($id);

@@ -10,6 +10,7 @@ namespace app\index\controller;
 use com\verify\HonrayVerify;
 use app\common\controller\Common;
 use think\Request;
+use think\Db;
 
 class Base extends Common
 {
@@ -32,8 +33,15 @@ class Base extends Common
 //         $params = session_get_cookie_params();
 //         return setcookie('enname', '', 0, $params['path'], $params['domain'], $params['secure'], true);
 
-        $member_certified_model = model('MemberCertified');
-        $data = $member_certified_model->getCityList();
+        $member_help_model = model('MemberSquare');
+        $data = $member_help_model->getAboutMeList(1,2,8);
+//         $myself_comments = Db::name('square_comment')->where(['commenter_id'=>8,'status'=>1])->column('square_id');
+//         $myself_square = Db::name('member_square')->where(['member_id'=>8,'status'=>1])->column('id');
+        
+//         $data = array_merge($myself_comments, $myself_square);
+//         $arr = array_unique($data);
+//         sort($arr);
+
         return $data;
     }
     
@@ -121,7 +129,8 @@ class Base extends Common
         if (Request::instance()->isOptions()) {
             return ;
         } else {
-            echo 'vuethink接口';
+            config('default_return_type','html');
+            return $this->fetch('./dist/index.html');
         }
     }
 }

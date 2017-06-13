@@ -28,6 +28,18 @@ class Member extends Model
 		'status' => 1,
 	];  
 	
+	
+	/**
+	 * 与认证表的一对一模型
+	 * @return \think\model\relation\HasOne
+	 */
+	public function memberCertified()
+	{
+	    return $this->hasOne('MemberCertified','member_id');
+	}
+	
+	
+	
 	/**
 	 * 获取用户所属所有用户组
 	 * @param  array   $param  [description]
@@ -36,60 +48,6 @@ class Member extends Model
     {
         return $this->belongsToMany('group', '__ADMIN_ACCESS__', 'group_id', 'user_id');
     }
-
-    /**
-     * [getDataList 列表]
-     * @AuthorHTL
-     * @DateTime  2017-02-10T22:19:57+0800
-     * @param     [int]                      $type_id  [类型：1、院系；2、年级；3、行业；4、城市]
-     * @param     [string]                   $param    [类型关键字]
-     * @param     [string]                   $keywords [关键字]
-     * @param     [number]                   $page     [当前页数]
-     * @param     [number]                   $limit    [t每页数量]
-     * @return    [array]                             [description]
-     */
-	public function getDataList($type_id, $param, $keywords, $page, $limit)
-	{
-		$map = [];
-		if ($type_id && $param) {
-    		switch ($type_id) {
-    		    case 1: $type = 'department'; break;
-    		    case 2: $type = 'grade'; break;
-    		    case 3: $type = 'work'; break;
-    		    case 4: $type = 'city'; break;
-    		    default:break;
-    		}
-    		$map[$type] = $param;
-		}
-		
-		if ($keywords) {
-			$map['CONCAT(department,grade,city)'] = ['like', '%'.$keywords.'%'];
-		}
-		
-		$dataCount = $this
-		      ->alias('a')
-		      ->join('__MEMBER_CERTIFIED__ c','a.member_id=c.member_id')
-		      ->where($map)
-		      ->count('id');
-		
-		$list = $this
-		      ->alias('a')
-		      ->field('a.member_id,name,avatar,department,grade')
-		      ->join('__MEMBER_CERTIFIED__ c','a.member_id=c.member_id')
-		      ->where($map);
-		
-		// 若有分页
-		if ($page && $limit) {
-			$list = $list->page($page, $limit);
-		}
-
-		$list = $list->select();
-		
-		$data['list'] = $list;
-		$data['dataCount'] = $dataCount;
-		
-		return $data;
-	}
 
 	/**
 	 * [getDataById 根据主键获取详情]
@@ -107,6 +65,22 @@ class Member extends Model
 		}
 		$userList = $this->getCertifiedInfo($data);
 		return $userList;
+	}
+	
+	/**
+	 * [getSimpleUser 根据主键获取详情]
+	 * @DateTime  2017-02-10T21:16:34+0800
+	 * @param     string                   $id [主键]
+	 * @return    [array]
+	 */
+	public function getSimpleUser($id = '')
+	{
+	    $data = $this->field('username,avatar')->where(['member_id'=>$id])->find();
+	    if (!$data) {
+	        $this->error = '暂无此数据';
+	        return false;
+	    }
+	    return $data;
 	}
 	
 	/**
@@ -333,12 +307,6 @@ class Member extends Model
 
 		$map['username'] = $username;
 		$userInfo = $this->where($map)->find();
-// 		$userInfo = $this
-// 		    ->alias('a')
-// 			->field('username,password,mobile')
-// 			->join('__MEMBER_CERTIFIED__ c','a.member_id=c.member_id')
-// 			->where($map)
-// 			->select();
 		
     	if (!$userInfo) {
 			$this->error = '帐号不存在';
@@ -362,8 +330,7 @@ class Member extends Model
         // 保存缓存/session
 //     	$params = session_get_cookie_params();
 //     	session_set_cookie_params($params['lifetime'], $params['path'], $params['domain'], $params['secure'], true);       //设置PHPSESSID也为HttpOnly
-//      session_start();
-        
+//      session_start();    
         // 清除session
 //         session_start();
 //         if (!empty($_SESSION)) {
@@ -374,6 +341,7 @@ class Member extends Model
 //             setcookie(session_name(), '', time() - 42000, $params['path'], $params['domain'], $params['secure'], true);
 //         }
 //         session_destroy();
+
         Session::set('enname','jason');
         $authKey = user_md5($userInfo['username'].$userInfo['password'].session_id());
         
@@ -394,11 +362,12 @@ class Member extends Model
      */
     public function getCertifiedInfo($userInfo)
     {
-        $certifiedInfo = Db::name('member_certified')->where(['member_id' => $userInfo['member_id']])->find();
-        if (!$certifiedInfo) {
-            $certifiedInfo = [];
-        }
-        $userList = array_merge(json_decode($userInfo, true), $certifiedInfo);
+        $certifiedInfo = $userInfo->memberCertified;
+        $certifiedInfo = $certifiedInfo ? $certifiedInfo->toArray() : [];
+        $userList = array_merge(
+            $userInfo->visible(['member_id','username','avatar'])->toArray(),
+            $certifiedInfo
+        );
         return $userList;
     }
 

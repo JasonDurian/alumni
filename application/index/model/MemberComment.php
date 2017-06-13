@@ -63,11 +63,10 @@ class MemberComment extends Model
         }
         
         $data['comments'] = $this
-            		    ->alias('a')
-            			->field('a.create_time,commenter_id,a.type,content,username')
-            			->join('__MEMBER__ c','commenter_id=c.member_id')
-            			->where(['a.member_id' => $member_id])
-            			->order(['a.type'=>'desc'])                           //将自己的评价放在开头
+            		    ->view('Member','username')
+            		    ->view('MemberComment','commenter_id,type,content,create_time','MemberComment.commenter_id=Member.member_id')
+            			->where(['MemberComment.member_id' => $member_id])
+            			->order(['MemberComment.type'=>'desc'])                           //将自己的评价放在开头
             			->select();
         $data['userInfo'] = $member;
         return $data;
