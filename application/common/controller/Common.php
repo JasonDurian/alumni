@@ -21,8 +21,10 @@ class Common extends Controller
         header('Access-Control-Allow-Origin: http://120.25.213.56');
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, authKey, sessionId');
+        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, authKey');
+        header('Content-Encoding:gzip');
         header('Content-Type:application/json; charset=utf-8');
+        
         $param =  Request::instance()->param();            
         $this->param = $param;
     }
