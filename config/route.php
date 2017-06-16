@@ -11,20 +11,20 @@
 
 return [
     '__rest__'	  => [
-		'member'	=> 'index/member',
-        'certify'   => 'index/memberCertified',
-        'comment'   => 'index/memberComment',
-        'contact'   => 'index/contact',
-        'square'    => 'index/square'
+		'api/v1/member'	   => 'api/member',
+        'api/v1/certify'   => 'api/memberCertified',
+        'api/v1/comment'   => 'api/memberComment',
+        'api/v1/contact'   => 'api/contact',
+        'api/v1/square'    => 'api/square'
 	],
     // 【基础】登录
-    'member/login' => ['index/base/login', ['method' => 'POST']],
+    'api/v1/member/login'      => ['api/base/login', ['method' => 'POST']],
     // 广场获取用户
-    'square/squareuser' => ['index/square/squareUser', ['method' => 'GET']],
+    'api/v1/square/squareuser' => ['api/square/squareUser', ['method' => 'GET']],
     // 广场添加留言
-    'square/comment' => ['index/square/comment', ['method' => 'POST']],
+    'api/v1/square/comment'    => ['api/square/comment', ['method' => 'POST']],
     
     // MISS路由
-    '__miss__'  => 'index/base/miss',
+    '__miss__'  => 'api/base/miss',
 
 ];

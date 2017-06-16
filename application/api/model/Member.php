@@ -5,7 +5,7 @@
 // | Author: linchuangbin <linchuangbin@honraytech.com>
 // +----------------------------------------------------------------------
 
-namespace app\index\model;
+namespace app\api\model;
 
 use think\Db;
 use think\Model;

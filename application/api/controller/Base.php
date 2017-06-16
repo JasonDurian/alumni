@@ -5,12 +5,11 @@
 // | Author: linchuangbin <linchuangbin@honraytech.com>
 // +----------------------------------------------------------------------
 
-namespace app\index\controller;
+namespace app\api\controller;
 
 use com\verify\HonrayVerify;
 use app\common\controller\Common;
 use think\Request;
-use think\Db;
 
 class Base extends Common
 {

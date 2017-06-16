@@ -1,6 +1,6 @@
 <?php
 
-namespace app\index\controller;
+namespace app\api\controller;
 
 
 use app\common\controller\ApiCommon;
