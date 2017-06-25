@@ -4,10 +4,11 @@ Alumni(Dva+TP5)
 ## Now Begin
 
 First:
+	git clone https://github.com/JasonDurian/alumni.git
 
 Second:
-1) add 'database.php' to 'config/'
-2) modify 'XXX' in the 'database.php'
+	1) add 'database.php' to 'config/'
+	2) modify 'XXX' in the 'database.php'
 
 database.php:
 
