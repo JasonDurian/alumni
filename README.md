@@ -4,13 +4,13 @@ Alumni(Dva+TP5)
 ## Now Begin
 
 First:
-1)git clone https://github.com/JasonDurian/alumni.git
-2)切换到alumni目录下面，再克隆核心tp5框架仓库：
+1. git clone https://github.com/JasonDurian/alumni.git
+2. switch to the 'alumni' directory. And clone the core of tp5 framework: 
 git clone https://github.com/top-think/framework thinkphp
 
 Second:
-1) add 'database.php' to 'config/'
-2) modify 'XXX' in the 'database.php'
+1. add 'database.php' to 'config/'
+2. modify 'XXX' in the 'database.php'
 
 database.php:
 
