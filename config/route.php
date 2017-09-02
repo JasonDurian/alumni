@@ -13,7 +13,7 @@ return [
     // 域名路由
     '__domain__'  => [
         'api.jasonfj.com'      => 'api',
-//        'admin.jasonfj.com'    => 'admin',
+//        'api.alumni.app'    => 'api',
     ],
 
     '__rest__'	  => [
