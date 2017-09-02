@@ -7,81 +7,81 @@
 
 return [
     // 定义资源路由
-    '__rest__'=>[
-        'admin/rules'		   =>'admin/rules',
-        'admin/groups'		   =>'admin/groups',
-        'admin/users'		   =>'admin/users',
-        'admin/menus'		   =>'admin/menus',
-        'admin/structures'	   =>'admin/structures',
-        'admin/posts'          =>'admin/posts',
-        'admin/members'		   =>'admin/members',
-        'admin/square'		   =>'admin/square',
-        'admin/comment'		   =>'admin/comment',
-        'admin/message'		   =>'admin/message',
+    '__rest__' => [
+        'admin/rules'		    => 'admin/rules',
+        'admin/groups'		    => 'admin/groups',
+        'admin/users'		    => 'admin/users',
+        'admin/menus'		    => 'admin/menus',
+        'admin/structures'	    => 'admin/structures',
+        'admin/posts'           => 'admin/posts',
+        'admin/members'		    => 'admin/members',
+        'admin/square'		    => 'admin/square',
+        'admin/comment'		    => 'admin/comment',
+        'admin/message'		    => 'admin/message',
     ],
 
 	// 【基础】登录
-	'admin/base/login' => ['admin/base/login', ['method' => 'POST']],
+	'admin/base/login'          => ['admin/base/login', ['method' => 'POST']],
 	// 【基础】记住登录
-	'admin/base/relogin'	=> ['admin/base/relogin', ['method' => 'POST']],
+	'admin/base/relogin'	    => ['admin/base/relogin', ['method' => 'POST']],
 	// 【基础】修改密码
-	'admin/base/setInfo' => ['admin/base/setInfo', ['method' => 'POST']],
+	'admin/base/setInfo'        => ['admin/base/setInfo', ['method' => 'POST']],
 	// 【基础】退出登录
-	'admin/base/logout' => ['admin/base/logout', ['method' => 'POST']],
+	'admin/base/logout'         => ['admin/base/logout', ['method' => 'POST']],
 	// 【基础】获取配置
-	'admin/base/getConfigs' => ['admin/base/getConfigs', ['method' => 'POST']],
+	'admin/base/getConfigs'     => ['admin/base/getConfigs', ['method' => 'POST']],
 	// 【基础】获取验证码
-	'admin/base/getVerify' => ['admin/base/getVerify', ['method' => 'GET']],
+	'admin/base/getVerify'      => ['admin/base/getVerify', ['method' => 'GET']],
 	// 【基础】上传图片
-	'admin/upload' => ['admin/upload/index', ['method' => 'POST']],
+	'admin/upload'              => ['admin/upload/index', ['method' => 'POST']],
 	// 保存系统配置
-	'admin/systemConfigs' => ['admin/systemConfigs/save', ['method' => 'POST']],
+	'admin/systemConfigs'       => ['admin/systemConfigs/save', ['method' => 'POST']],
 	// 【规则】批量删除
-	'admin/rules/deletes' => ['admin/rules/deletes', ['method' => 'POST']],
+	'admin/rules/deletes'       => ['admin/rules/deletes', ['method' => 'POST']],
 	// 【规则】批量启用/禁用
-	'admin/rules/enables' => ['admin/rules/enables', ['method' => 'POST']],
+	'admin/rules/enables'       => ['admin/rules/enables', ['method' => 'POST']],
 	// 【用户组】批量删除
-	'admin/groups/deletes' => ['admin/groups/deletes', ['method' => 'POST']],
+	'admin/groups/deletes'      => ['admin/groups/deletes', ['method' => 'POST']],
 	// 【用户组】批量启用/禁用
-	'admin/groups/enables' => ['admin/groups/enables', ['method' => 'POST']],
+	'admin/groups/enables'      => ['admin/groups/enables', ['method' => 'POST']],
     // 【管理员】管理员缓存数据
-    'admin/users/query' => ['admin/users/query', ['method' => 'GET']],
+    'admin/users/query'         => ['admin/users/query', ['method' => 'GET']],
 	// 【管理员】批量删除
-	'admin/users/deletes' => ['admin/users/deletes', ['method' => 'POST']],
+	'admin/users/deletes'       => ['admin/users/deletes', ['method' => 'POST']],
 	// 【管理员】批量启用/禁用
-	'admin/users/enables' => ['admin/users/enables', ['method' => 'POST']],
+	'admin/users/enables'       => ['admin/users/enables', ['method' => 'POST']],
     // 【用户】用户缓存数据
-    'admin/members/query' => ['admin/members/query', ['method' => 'GET']],
+    'admin/members/query'       => ['admin/members/query', ['method' => 'GET']],
     // 【用户】批量删除
-    'admin/members/deletes' => ['admin/members/deletes', ['method' => 'POST']],
+    'admin/members/deletes'     => ['admin/members/deletes', ['method' => 'POST']],
     // 【用户】批量启用/禁用
-    'admin/members/enables' => ['admin/members/enables', ['method' => 'POST']],
+    'admin/members/enables'     => ['admin/members/enables', ['method' => 'POST']],
 	// 【广场】批量删除
-	'admin/square/deletes' => ['admin/square/deletes', ['method' => 'POST']],
+	'admin/square/deletes'      => ['admin/square/deletes', ['method' => 'POST']],
 	// 【广场】批量启用/禁用
-	'admin/square/enables' => ['admin/square/enables', ['method' => 'POST']],
+	'admin/square/enables'      => ['admin/square/enables', ['method' => 'POST']],
     // 【用户评论】批量删除
-	'admin/comment/deletes' => ['admin/comment/deletes', ['method' => 'POST']],
+	'admin/comment/deletes'     => ['admin/comment/deletes', ['method' => 'POST']],
 	// 【用户评论】批量启用/禁用
-	'admin/comment/enables' => ['admin/comment/enables', ['method' => 'POST']],
+	'admin/comment/enables'     => ['admin/comment/enables', ['method' => 'POST']],
     // 【广场留言】批量删除
-	'admin/message/deletes' => ['admin/message/deletes', ['method' => 'POST']],
+	'admin/message/deletes'     => ['admin/message/deletes', ['method' => 'POST']],
 	// 【广场留言】批量启用/禁用
-	'admin/message/enables' => ['admin/message/enables', ['method' => 'POST']],
+	'admin/message/enables'     => ['admin/message/enables', ['method' => 'POST']],
     // 【菜单】批量删除
-    'admin/menus/deletes' => ['admin/menus/deletes', ['method' => 'POST']],
+    'admin/menus/deletes'       => ['admin/menus/deletes', ['method' => 'POST']],
     // 【菜单】批量启用/禁用
-    'admin/menus/enables' => ['admin/menus/enables', ['method' => 'POST']],
+    'admin/menus/enables'       => ['admin/menus/enables', ['method' => 'POST']],
 	// 【组织架构】批量删除
-	'admin/structures/deletes' => ['admin/structures/deletes', ['method' => 'POST']],
+	'admin/structures/deletes'  => ['admin/structures/deletes', ['method' => 'POST']],
 	// 【组织架构】批量启用/禁用
-	'admin/structures/enables' => ['admin/structures/enables', ['method' => 'POST']],
+	'admin/structures/enables'  => ['admin/structures/enables', ['method' => 'POST']],
 	// 【部门】批量删除
-	'admin/posts/deletes' => ['admin/posts/deletes', ['method' => 'POST']],
+	'admin/posts/deletes'       => ['admin/posts/deletes', ['method' => 'POST']],
 	// 【部门】批量启用/禁用
-	'admin/posts/enables' => ['admin/posts/enables', ['method' => 'POST']],
-    
+	'admin/posts/enables'       => ['admin/posts/enables', ['method' => 'POST']],
+
     // 【基础】index
-    'admin/base/index' => ['admin/base/index', ['method' => 'GET']],
+    'admin/base/index'          => ['admin/base/index', ['method' => 'GET']],
 	
 ];

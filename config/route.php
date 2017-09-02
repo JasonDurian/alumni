@@ -10,21 +10,29 @@
 // +----------------------------------------------------------------------
 
 return [
+    // 域名路由
+    '__domain__'  => [
+        'api.jasonfj.com'      => 'api',
+        'admin.jasonfj.com'    => 'admin',
+//        'api.alumni.app'      => 'api',
+//        'admin.alumni.app'    => 'admin',
+    ],
+
     '__rest__'	  => [
-		'api/v1/member'	   => 'api/member',
-        'api/v1/certify'   => 'api/memberCertified',
-        'api/v1/comment'   => 'api/memberComment',
-        'api/v1/contact'   => 'api/contact',
-        'api/v1/square'    => 'api/square'
+		'api/v1/member'	       => 'api/member',
+        'api/v1/certify'       => 'api/memberCertified',
+        'api/v1/comment'       => 'api/memberComment',
+        'api/v1/contact'       => 'api/contact',
+        'api/v1/square'        => 'api/square'
 	],
     // 【基础】登录
     'api/v1/member/login'      => ['api/base/login', ['method' => 'POST']],
-    // 广场获取用户
+    // 【广场】获取用户
     'api/v1/square/squareuser' => ['api/square/squareUser', ['method' => 'GET']],
-    // 广场添加留言
+    // 【广场】添加留言
     'api/v1/square/comment'    => ['api/square/comment', ['method' => 'POST']],
     
     // MISS路由
-    '__miss__'  => 'api/base/miss',
+    '__miss__'                 => 'api/base/miss',
 
 ];
