@@ -6,6 +6,14 @@
 // +----------------------------------------------------------------------
 
 return [
+    // 域名路由
+    '__domain__'  => [
+//        'api.jasonfj.com'      => 'api',
+        'admin.jasonfj.com'    => [
+            // MISS路由
+            '__miss__'         => 'admin/base/miss',
+        ],
+    ],
     // 定义资源路由
     '__rest__' => [
         'admin/rules'		    => 'admin/rules',
@@ -84,6 +92,4 @@ return [
     // 【基础】index
     'admin/base/index'          => ['admin/base/index', ['method' => 'GET']],
 
-    // MISS路由
-    '__miss__'                  => 'admin/base/miss',
 ];
