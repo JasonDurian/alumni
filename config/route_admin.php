@@ -83,5 +83,7 @@ return [
 
     // 【基础】index
     'admin/base/index'          => ['admin/base/index', ['method' => 'GET']],
-	
+
+    // MISS路由
+    '__miss__'                  => 'admin/base/miss',
 ];
