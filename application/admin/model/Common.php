@@ -163,7 +163,7 @@ class Common extends Model
 	public function enableDatas($ids = [], $status = 1, $delSon = false)
 	{
 		if (empty($ids)) {
-			$this->error = '删除失败';
+			$this->error = '操作失败';
 			return false;
 		}
 

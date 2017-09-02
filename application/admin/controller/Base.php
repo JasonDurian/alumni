@@ -24,8 +24,13 @@ class Base extends Common
     public function index()
     {
 //        file_put_contents(__DIR__ . '/test.php', $param['authKey']);
-       $data = $this->user_model->login('admin', 'jasonspassword');
-       return $data;
+//        $data = $this->user_model->login('Mustard', 'jasonspassword');
+
+//        $member_model = model('Member');
+//        $data = $member_model->getDataById(7);
+//        return $data;
+
+        echo phpinfo();
     }
     
     public function login()

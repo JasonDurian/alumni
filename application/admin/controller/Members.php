@@ -7,14 +7,14 @@
 
 namespace app\admin\controller;
 
-class Users extends ApiCommon
+class Members extends ApiCommon
 {
-    protected $user_model;
+    protected $member_model;
     
     protected function _initialize()
     {
         parent::_initialize();
-        $this->user_model = model('User');
+        $this->member_model = model('Member');
     }
 
     public function index()
@@ -24,16 +24,17 @@ class Users extends ApiCommon
         $time = !empty($param['time']) ? explode(',', $param['time']): [];
         $page = !empty($param['page']) ? $param['page']: 1;
         $limit = !empty($param['limit']) ? $param['limit']: 10;
-        $data = $this->user_model->getDataList($keywords, $page, $limit, $time);
+
+        $data = $this->member_model->getDataList($keywords, $page, $limit, $time);
         return resultArray(['data' => $data]);
     }
 
     public function read()
     {   
         $param = $this->param;
-        $data = $this->user_model->getDataById($param['id']);
+        $data = $this->member_model->getDataById($param['id']);
         if (!$data) {
-            return resultArray(['error' => $this->user_model->getError()]);
+            return resultArray(['error' => $this->member_model->getError()]);
         } 
         return resultArray(['data' => $data]);
     }
@@ -41,9 +42,9 @@ class Users extends ApiCommon
     public function save()
     {
         $param = $this->param;
-        $data = $this->user_model->createData($param);
+        $data = $this->member_model->createData($param);
         if (!$data) {
-            return resultArray(['error' => $this->user_model->getError()]);
+            return resultArray(['error' => $this->member_model->getError()]);
         } 
         return resultArray(['data' => '添加成功']);
     }
@@ -51,9 +52,9 @@ class Users extends ApiCommon
     public function update()
     {
         $param = $this->param;
-        $data = $this->user_model->updateDataById($param, $param['id']);
+        $data = $this->member_model->updateDataById($param, $param['id']);
         if (!$data) {
-            return resultArray(['error' => $this->user_model->getError()]);
+            return resultArray(['error' => $this->member_model->getError()]);
         }
         return resultArray(['data' => '编辑成功']);
     }
@@ -61,9 +62,9 @@ class Users extends ApiCommon
     public function delete()
     {
         $param = $this->param;
-        $data = $this->user_model->delDataById($param['id']);       
+        $data = $this->member_model->delDataById($param['id']);       
         if (!$data) {
-            return resultArray(['error' => $this->user_model->getError()]);
+            return resultArray(['error' => $this->member_model->getError()]);
         } 
         return resultArray(['data' => '删除成功']);    
     }
@@ -71,9 +72,9 @@ class Users extends ApiCommon
     public function deletes()
     {
         $param = $this->param;
-        $data = $this->user_model->delDatas($param['ids']);  
+        $data = $this->member_model->delDatas($param['ids']);
         if (!$data) {
-            return resultArray(['error' => $this->user_model->getError()]);
+            return resultArray(['error' => $this->member_model->getError()]);
         } 
         return resultArray(['data' => '删除成功']); 
     }
@@ -81,9 +82,9 @@ class Users extends ApiCommon
     public function enables()
     {
         $param = $this->param;
-        $data = $this->user_model->enableDatas($param['ids'], $param['status']);  
+        $data = $this->member_model->enableDatas($param['ids'], $param['status']);  
         if (!$data) {
-            return resultArray(['error' => $this->user_model->getError()]);
+            return resultArray(['error' => $this->member_model->getError()]);
         } 
         return resultArray(['data' => '操作成功']);         
     }

@@ -14,6 +14,10 @@ return [
         'admin/menus'		   =>'admin/menus',
         'admin/structures'	   =>'admin/structures',
         'admin/posts'          =>'admin/posts',
+        'admin/members'		   =>'admin/members',
+        'admin/square'		   =>'admin/square',
+        'admin/comment'		   =>'admin/comment',
+        'admin/message'		   =>'admin/message',
     ],
 
 	// 【基础】登录
@@ -40,16 +44,34 @@ return [
 	'admin/groups/deletes' => ['admin/groups/deletes', ['method' => 'POST']],
 	// 【用户组】批量启用/禁用
 	'admin/groups/enables' => ['admin/groups/enables', ['method' => 'POST']],
-    // 【用户】用户缓存数据
+    // 【管理员】管理员缓存数据
     'admin/users/query' => ['admin/users/query', ['method' => 'GET']],
-	// 【用户】批量删除
+	// 【管理员】批量删除
 	'admin/users/deletes' => ['admin/users/deletes', ['method' => 'POST']],
-	// 【用户】批量启用/禁用
+	// 【管理员】批量启用/禁用
 	'admin/users/enables' => ['admin/users/enables', ['method' => 'POST']],
-	// 【菜单】批量删除
-	'admin/menus/deletes' => ['admin/menus/deletes', ['method' => 'POST']],
-	// 【菜单】批量启用/禁用
-	'admin/menus/enables' => ['admin/menus/enables', ['method' => 'POST']],
+    // 【用户】用户缓存数据
+    'admin/members/query' => ['admin/members/query', ['method' => 'GET']],
+    // 【用户】批量删除
+    'admin/members/deletes' => ['admin/members/deletes', ['method' => 'POST']],
+    // 【用户】批量启用/禁用
+    'admin/members/enables' => ['admin/members/enables', ['method' => 'POST']],
+	// 【广场】批量删除
+	'admin/square/deletes' => ['admin/square/deletes', ['method' => 'POST']],
+	// 【广场】批量启用/禁用
+	'admin/square/enables' => ['admin/square/enables', ['method' => 'POST']],
+    // 【用户评论】批量删除
+	'admin/comment/deletes' => ['admin/comment/deletes', ['method' => 'POST']],
+	// 【用户评论】批量启用/禁用
+	'admin/comment/enables' => ['admin/comment/enables', ['method' => 'POST']],
+    // 【广场留言】批量删除
+	'admin/message/deletes' => ['admin/message/deletes', ['method' => 'POST']],
+	// 【广场留言】批量启用/禁用
+	'admin/message/enables' => ['admin/message/enables', ['method' => 'POST']],
+    // 【菜单】批量删除
+    'admin/menus/deletes' => ['admin/menus/deletes', ['method' => 'POST']],
+    // 【菜单】批量启用/禁用
+    'admin/menus/enables' => ['admin/menus/enables', ['method' => 'POST']],
 	// 【组织架构】批量删除
 	'admin/structures/deletes' => ['admin/structures/deletes', ['method' => 'POST']],
 	// 【组织架构】批量启用/禁用
