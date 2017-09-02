@@ -105,7 +105,8 @@ class Base extends Common
         if (Request::instance()->isOptions()) {
             return ;
         } else {
-            echo 'vuethink接口';
+            config('default_return_type','html');
+            return $this->fetch('./dist_admin/index.html');
         }
     }
 }
