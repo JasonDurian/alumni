@@ -24,6 +24,10 @@ class Common extends Controller
             'http://api.alumni.app',
             'http://www.alumni.app',
             'http://alumni.app',
+            'http://admin.jasonfj.com',
+            'http://api.jasonfj.com',
+            'http://www.jasonfj.com',
+            'http://jasonfj.com',
             'http://localhost:8000',
         ];
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -39,10 +43,11 @@ class Common extends Controller
             $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
         }
 
-        if(in_array($origin, $allow_origin) || $this->isOriginAllowed($origin, $_SERVER['HTTP_HOST'])) {
+//        if(in_array($origin, $allow_origin) || $this->isOriginAllowed($origin, $_SERVER['HTTP_HOST'])) {
+        if(in_array($origin, $allow_origin)) {
             header('Access-Control-Allow-Origin: ' . $origin);
         } else {
-//            exit("CSRF protection in POST request: detected invalid Origin header: " . $origin);
+            exit("CSRF protection in POST request: detected invalid Origin header: " . $origin);
         }
         /*防止跨域*/
 //        header('Access-Control-Allow-Origin: admin.jasonfj.com');
