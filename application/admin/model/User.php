@@ -11,6 +11,7 @@ use think\Db;
 use think\Session;
 use app\admin\model\Common;
 use com\verify\HonrayVerify;
+use com\Tree;
 
 class User extends Common 
 {	
@@ -344,7 +345,7 @@ class User extends Common
             return null;
         }
         //处理菜单成树状
-        $tree = new \com\Tree();
+        $tree = new Tree();
         $ret['menusList'] = $tree->list_to_tree($menusList, 'id', 'pid', 'child', 0, true, array('pid'));
 //         $ret['menusList'] = memuLevelClear($ret['menusList']);
         // 处理规则成树状
