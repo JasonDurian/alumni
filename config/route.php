@@ -11,10 +11,10 @@
 
 return [
     // 域名路由
-    '__domain__'  => [
-        'api.jasonfj.com'      => 'api',
+//    '__domain__'  => [
+//        'api.jasonfj.com'      => 'api',
 //        'api.alumni.app'    => 'api',
-    ],
+//    ],
 
     '__rest__'	  => [
 		'api/v1/member'	       => 'api/member',
@@ -31,6 +31,6 @@ return [
     'api/v1/square/comment'    => ['api/square/comment', ['method' => 'POST']],
     
     // MISS路由
-    '__miss__'                 => 'api/base/miss',
+//    '__miss__'                 => 'api/base/miss',
 
 ];

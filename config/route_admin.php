@@ -7,10 +7,10 @@
 
 return [
     // 域名路由
-    '__domain__'  => [
-        'admin.jasonfj.com'    => 'admin',
+//    '__domain__'  => [
+//        'admin.jasonfj.com'     => 'admin',
 //        'admin.alumni.app'    => 'admin',
-    ],
+//    ],
 
     // 定义资源路由
     '__rest__' => [
@@ -91,7 +91,7 @@ return [
         // 【基础】index
         'base/index'          => ['admin/base/index', ['method' => 'GET']],
 
-        '__miss__'         => 'admin/base/miss',
+//        '__miss__'         => 'admin/base/miss',
     ],
 
 ];
