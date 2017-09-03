@@ -31,6 +31,6 @@ return [
     'api/v1/square/comment'    => ['api/square/comment', ['method' => 'POST']],
     
     // MISS路由
-//    '__miss__'                 => 'api/base/miss',
+    '__miss__'                 => 'api/base/miss',
 
 ];

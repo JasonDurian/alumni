@@ -52,7 +52,7 @@ return [
         // 【用户组】批量启用/禁用
         'groups/enables'      => ['admin/groups/enables', ['method' => 'POST']],
         // 【管理员】管理员缓存数据
-        'users/query'         => ['admin/users/query', ['method' => 'GET']],
+        'users/query'         => ['admin/users/query', ['method' => 'POST']],
         // 【管理员】批量删除
         'users/deletes'       => ['admin/users/deletes', ['method' => 'POST']],
         // 【管理员】批量启用/禁用

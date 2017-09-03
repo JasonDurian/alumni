@@ -17,15 +17,34 @@ class Common extends Controller
     protected function _initialize()
     {
         parent::_initialize();
-        /*防止跨域*/
-        $allow_origin = array(
+
+        /* 指定允许访问的源 */
+        $allow_origin = [
             'http://admin.alumni.app',
-            'http://admin.jasonfj.com',
-        );
-        $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
-        if(in_array($origin, $allow_origin)){
-            header('Access-Control-Allow-Origin: ' . $origin);
+            'http://api.alumni.app',
+            'http://www.alumni.app',
+            'http://alumni.app',
+            'http://localhost:8000',
+        ];
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            /* GET没有'HTTP_ORIGIN' */
+            if (isset($_SERVER['HTTP_REFERER'])) {
+                $http_origin = explode('/',$_SERVER['HTTP_REFERER']);
+                $origin = $http_origin[0] . '//' . $http_origin[2];
+            } else {
+                $origin = '';
+            }
+        } else {
+            /* 其余restful REQUEST_METHOD */
+            $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
         }
+
+        if(in_array($origin, $allow_origin) || $this->isOriginAllowed($origin, $_SERVER['HTTP_HOST'])) {
+            header('Access-Control-Allow-Origin: ' . $origin);
+        } else {
+//            exit("CSRF protection in POST request: detected invalid Origin header: " . $origin);
+        }
+        /*防止跨域*/
 //        header('Access-Control-Allow-Origin: admin.jasonfj.com');
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -33,6 +52,20 @@ class Common extends Controller
         header('Content-Type:application/json; charset=utf-8');
         $param =  Request::instance()->param();            
         $this->param = $param;
+    }
+
+    /**
+     * @param $incomingOrigin
+     * @param $allowOrigin
+     * @return bool
+     */
+    private function isOriginAllowed($incomingOrigin, $allowOrigin)
+    {
+        $pattern = '/^http:\/\/([\w_-]+\.)*' . $allowOrigin . '$/';
+
+        $allow = preg_match($pattern, $incomingOrigin);
+
+        return $allow ? true : false;
     }
 
     public function object_array($array) 
