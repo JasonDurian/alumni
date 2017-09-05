@@ -2,7 +2,6 @@
 
 namespace app\api\controller;
 
-
 use app\common\controller\ApiCommon;
 
 class Square extends ApiCommon
@@ -14,7 +13,7 @@ class Square extends ApiCommon
     {
         parent::_initialize();
         
-        if (empty($this->userCache['id'])) {
+        if ($this->userCache['check_status'] !== 1) {
             exit(json_encode(['code'=>400, 'error'=>'此功能暂不对非认证用户开放']));
         }
         

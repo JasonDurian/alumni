@@ -38,8 +38,6 @@ class Member extends Model
 	    return $this->hasOne('MemberCertified','member_id');
 	}
 	
-	
-	
 	/**
 	 * 获取用户所属所有用户组
 	 * @param  array   $param  [description]
@@ -365,7 +363,7 @@ class Member extends Model
         $certifiedInfo = $userInfo->memberCertified;
         $certifiedInfo = $certifiedInfo ? $certifiedInfo->toArray() : [];
         $userList = array_merge(
-            $userInfo->visible(['member_id','username','avatar'])->toArray(),
+            $userInfo->visible(['member_id','username','avatar','check_status'])->toArray(),
             $certifiedInfo
         );
         return $userList;
@@ -418,6 +416,20 @@ class Member extends Model
         
         $this->error = '修改失败';
 		return false;
+    }
+
+    /**
+     * 获取审核状态信息
+     * @param int $id
+     * @return bool|mixed
+     */
+    public function getCheckStatus($id = 0) {
+        $data = $this->where('member_id', $id)->value('check_status');
+        if (!$data) {
+            $this->error = '暂无此数据';
+            return false;
+        }
+        return $data;
     }
 
 	/**

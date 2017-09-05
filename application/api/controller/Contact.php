@@ -22,14 +22,15 @@ class Contact extends Common
      */
     public function index()
     {
-        if (empty($this->param)) {
+        if (empty($this->param['type_id']) && empty($this->param['param']) &&
+            empty($this->param['page']) && empty($this->param['limit'])) {
             $data = $this->member_certified_model->getCityList();
         } else {
             $type_id = !empty($this->param['type_id']) ? intval($this->param['type_id']) : '';
-            $param = !empty($this->param['param']) ? $this->param['param'] : '';
+            $param = !empty($this->param['param']) ? trim($this->param['param']) : '';
 //             $keywords = !empty($this->param['keywords']) ? $this->param['keywords'] : '';
-            $page = !empty($this->param['page']) ? $this->param['page'] : '';
-            $limit = !empty($this->param['limit']) ? $this->param['limit'] : '';
+            $page = !empty($this->param['page']) ? intval($this->param['page']) : 1;
+            $limit = !empty($this->param['limit']) ? intval($this->param['limit']) : 15;
             $data = $this->member_certified_model->getDataList($type_id, $param, $page, $limit);
         }
         

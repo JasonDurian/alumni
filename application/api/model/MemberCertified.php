@@ -2,6 +2,7 @@
 namespace app\api\model;
 
 use think\Model;
+use think\Db;
 
 class MemberCertified extends Model
 {
@@ -28,7 +29,7 @@ class MemberCertified extends Model
      */
     protected function scopeMember($query)
     {
-        $query->view('Member','avatar');
+        $query->view('Member','avatar,check_status');
     }
     
     /**
@@ -37,20 +38,29 @@ class MemberCertified extends Model
      */
     public function certify($param)
     {
-//         $id = $param['member_id'];
 //         $checkData = Db::name('member')->where(['member_id'=>$id])->find();
 //         if (!$checkData) {
 //             $this->error = '暂无此数据';
 //             return false;
 //         }
-    
+
+        $id = $this->where('member_id', $param['member_id'])->value('id');
+
         $this->startTrans();
     
         try {
-    
-            $this->data($param)->allowField(true)->save();
+            if ($id) {
+                /* 更新认证 */
+                $this->allowField(true)->save($param, ['id' => $id]);
+            } else {
+                /* 新建认证 */
+                $this->data($param)->allowField(true)->save();
+                $id = $this->id;
+            }
+            /* 更新认证状态信息 */
+            Db::name('member')->update(['check_status' => 2, 'member_id' => $param['member_id']]);
             $this->commit();
-            return $this->id;
+            return $id;
     
         } catch(\Exception $e) {
     
@@ -69,6 +79,11 @@ class MemberCertified extends Model
     public function getDataById($id = '')
     {
         $data = $this->get($id);
+//        $data = $this
+//            ->view('MemberCertified','name,city,mobile,hide_mobile,email,wechat,qq,department,grade,work,company,position')
+//            ->view('Member', 'check_status','MemberCertified.member_id=Member.member_id')
+//            ->where(['MemberCertified.id' => $id, 'Member.status' => 1])
+//            ->find();
         if (!$data) {
             $this->error = '暂无此数据';
             return false;
@@ -90,7 +105,6 @@ class MemberCertified extends Model
 // 		      ->join('__MEMBER__ c','a.member_id=c.member_id')
 // 		      ->where(['a.member_id'=>$member_id])
 //            ->find();
-
         $data = $this
             ->scope('member')
 	        ->view('MemberCertified','name,city,mobile,hide_mobile,email,wechat,qq,department,grade,work,company,position','MemberCertified.member_id=Member.member_id')
@@ -115,9 +129,9 @@ class MemberCertified extends Model
      * @param     [number]                   $limit    [每页数量]
      * @return    [array]                             [description]
      */
-    public function getDataList($type_id, $param, $page, $limit)
+    public function getDataList($type_id = 1, $param = '', $page = 1, $limit = 10)
 	{
-		$map = ['Member.status'=>1];
+		$map = ['Member.status' => 1, 'check_status' => 1];
 		if ($type_id && $param) {
     		switch ($type_id) {
     		    case 1: $map['department'] = $param; break;
@@ -132,17 +146,15 @@ class MemberCertified extends Model
     		    default:break;
     		}
     		
-    		$cacheName = $param . $type_id;
+//    		$cacheName = $param . $type_id;
 		}
 		
-		if ($type_id && empty($param)) {                              //全部行业
-		    $cacheName = 'all' . $type_id;
-		}
+//		if ($type_id && empty($param)) {                              //全部行业
+//		    $cacheName = 'all' . $type_id;
+//		}
 		
-		if (!empty($cacheName)) {
-		    $dataCount = $this->where(['status'=>1])->cache($cacheName, 300)->count('id');       //将符合条件的列表总数缓存5分钟
-		}
-		
+        $dataCount = $this->where(['status'=>1])->count('id');
+
 // 		$list = $this
 // 		      ->alias('a')
 // 		      ->field('avatar,a.member_id,name,department,grade,company,position')
@@ -170,9 +182,9 @@ class MemberCertified extends Model
 	 * 获取通讯录城市列表
 	 */
 	public function getCityList() {
-	    
+
 	    $data = $this
-    	    ->field('city,count(city) as num')
+    	    ->field('city, COUNT(city) AS num')
 //     	    ->distinct(true)
     	    ->group('city')
             ->select();

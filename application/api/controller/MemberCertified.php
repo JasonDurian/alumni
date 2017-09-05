@@ -9,11 +9,13 @@ use app\common\controller\ApiCommon;
 class MemberCertified extends ApiCommon
 {
     protected $member_certified_model;
-    
+    protected $member_model;
+
     protected function _initialize()
     {
         parent::_initialize();
         $this->member_certified_model = model('MemberCertified');
+        $this->member_model = model('Member');
     }
     
     /**
@@ -55,12 +57,12 @@ class MemberCertified extends ApiCommon
         if ((!$data) || (!$userList)) {
             return resultArray(['error' => $this->member_certified_model->getError()]);
         }
-        return resultArray([ 
+//        $userList['check_status'] = 2;
+        return resultArray([
             'data' => [
-                'message'   => '认证成功',
+                'message'   => '信息保存成功，等待审核',
                 'userInfo'  => $userList
-            ] 
-            
+            ]
         ]);
     }
 
@@ -127,11 +129,16 @@ class MemberCertified extends ApiCommon
     /**
      * 用来获取最新信息和更新缓存
      * 
-     * @param int $id
+     * @param mixed $id
      * @return array|bool 更新过后的用户信息
      */
-    protected function updateCache($id = '')
+    protected function updateCache($id = 0)
     {
+        /* 实时更新认证状态信息 */
+        $member_id = !empty($this->userCache['member_id']) ? $this->userCache['member_id'] : $id;
+        $check_status = $this->member_model->getCheckStatus($member_id);
+        if ($check_status) $this->userCache['check_status'] = $check_status;
+
         if (!empty($id)) {
             $data = $this->member_certified_model->getDataById($id);
             if (!$data) {

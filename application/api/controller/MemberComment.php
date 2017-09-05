@@ -12,8 +12,8 @@ class MemberComment extends ApiCommon
     protected function _initialize()
     {
         parent::_initialize();
-        
-        if (empty($this->userCache['id'])) {
+
+        if ($this->userCache['check_status'] !== 1) {
             exit(json_encode(['code'=>400, 'error'=>'此功能暂不对非认证用户开放']));
         }
         
