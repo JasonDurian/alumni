@@ -52,6 +52,8 @@ class MemberCertified extends ApiCommon
     public function save()
     {
 //         action('CheckAuth/index');
+        /* 传递过来的grade会带上'xx级',是字符串 */
+        $this->param['grade'] = !empty($this->param['grade']) ? intval($this->param['grade']) : '';
         $data = $this->member_certified_model->certify($this->param);
         $userList = $this->updateCache($data);
         if ((!$data) || (!$userList)) {
