@@ -63,6 +63,8 @@ return [
         'members/deletes'     => ['admin/members/deletes', ['method' => 'POST']],
         // 【用户】批量启用/禁用
         'members/enables'     => ['admin/members/enables', ['method' => 'POST']],
+        // 【用户】批量审核
+        'members/checks'     => ['admin/members/checks', ['method' => 'POST']],
         // 【广场】批量删除
         'square/deletes'      => ['admin/square/deletes', ['method' => 'POST']],
         // 【广场】批量启用/禁用

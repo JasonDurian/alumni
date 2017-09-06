@@ -50,9 +50,10 @@ class Member extends Common
      * @param     [number]                   $page     [当前页数]
      * @param     [number]                   $limit    [每页数量]
      * @param     [array]                   $time    [创建时间区间]
+     * @param     [mixed]                   $status    [用户审核状态]
      * @return    [array]                             [description]
      */
-    public function getDataList($keywords = '', $page = 1, $limit = 10, $time = [])
+    public function getDataList($keywords = '', $page = 1, $limit = 10, $time = [], $status = '')
 	{
 		$map = [];
 		if (!empty($keywords)) {
@@ -61,6 +62,11 @@ class Member extends Common
 
 		if (!empty($time)) {
 		    $map['create_time'] = ['between time', $time];
+        }
+
+        /* 用户审核状态，默认为空 不能为0 */
+        if ($status !== '') {
+            $map['check_status'] = $status;
         }
 		
 		$dataCount = $this->where($map)->count('member_id');
@@ -91,14 +97,14 @@ class Member extends Common
 // 		$data = $this->get($id);
 
 	    $data = $this->scope('memberCertified')
-	        ->view('Member', 'member_id,uuid,username,type,status,create_time', 'MemberCertified.member_id=Member.member_id')
+	        ->view('Member', '*', 'MemberCertified.member_id=Member.member_id')
     	    ->where(['Member.member_id' => $id, 'Member.status' => 1])
     	    ->find();
 		if (!$data) {
 			$this->error = '暂无此数据';
 			return false;
 		}
-// 		$data->hidden(['password']);
+ 		$data->hidden(['password','avatar']);
 // 		$data['groups'] = $data->groups;
 		return $data;
 	}
@@ -187,7 +193,7 @@ class Member extends Common
 // 			}
 // 			Db::name('admin_access')->insertAll($userGroups);
 
-    		$this->allowField(true)->save($param, ['id' => $id]);
+    		$this->allowField(true)->save($param, ['member_id' => $id]);
     		$this->commit();
     		return true;
 
@@ -386,6 +392,29 @@ class Member extends Common
         
         $this->error = '修改失败';
 		return false;
+    }
+
+    /**
+     * [checkMembers 批量审核]
+     * @DateTime  2017-09-11T21:01:58+0800
+     * @param     array                     $ids    [主键数组]
+     * @param     integer                   $status [状态0：未提交审核；1：已通过；2：待审核；3：审核未通过]
+     * @return    mixed                    [description]
+     */
+    public function checkMembers($ids = [], $status = 1)
+    {
+        if (empty($ids)) {
+            $this->error = '操作失败';
+            return false;
+        }
+
+        try {
+            $this->where('member_id', 'in', $ids)->setField('check_status', $status);
+            return true;
+        } catch (\Exception $e) {
+            $this->error = '操作失败';
+            return false;
+        }
     }
 
 	/**

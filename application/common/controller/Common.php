@@ -20,15 +20,16 @@ class Common extends Controller
 
         /* 指定允许访问的源 */
         $allow_origin = [
-            'http://admin.alumni.app',
-            'http://api.alumni.app',
-            'http://www.alumni.app',
-            'http://alumni.app',
+//            'http://admin.alumni.app',
+//            'http://api.alumni.app',
+//            'http://www.alumni.app',
+//            'http://alumni.app',
+//            'http://localhost:8000',
             'http://admin.jasonfj.com',
             'http://api.jasonfj.com',
+            'http://alumni.jasonfj.com',
             'http://www.jasonfj.com',
             'http://jasonfj.com',
-            'http://localhost:8000',
         ];
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             /* GET没有'HTTP_ORIGIN' */

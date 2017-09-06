@@ -7,6 +7,7 @@
  * @param  integer $root  [description]
  * @param  string  $child [description]
  * @param  string  $level [description]
+ * @return array
  */
 function memuLevelClear($data, $root=1, $child='child', $level='level')
 {

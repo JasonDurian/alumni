@@ -20,12 +20,13 @@ class Members extends ApiCommon
     public function index()
     {   
         $param = $this->param;
-        $keywords = !empty($param['keywords']) ? $param['keywords']: '';
-        $time = !empty($param['time']) ? explode(',', $param['time']): [];
-        $page = !empty($param['page']) ? $param['page']: 1;
-        $limit = !empty($param['limit']) ? $param['limit']: 10;
+        $keywords = !empty($param['keywords']) ? $param['keywords'] : '';
+        $time = !empty($param['time']) ? explode(',', $param['time']) : [];
+        $status = isset($param['status']) && $param['status'] != '' ? intval($param['status']) : '';
+        $page = !empty($param['page']) ? $param['page'] : 1;
+        $limit = !empty($param['limit']) ? $param['limit'] : 10;
 
-        $data = $this->member_model->getDataList($keywords, $page, $limit, $time);
+        $data = $this->member_model->getDataList($keywords, $page, $limit, $time, $status);
         return resultArray(['data' => $data]);
     }
 
@@ -88,7 +89,17 @@ class Members extends ApiCommon
         } 
         return resultArray(['data' => '操作成功']);         
     }
-    
+
+    public function checks()
+    {
+        $param = $this->param;
+        $data = $this->member_model->checkMembers($param['ids'], $param['check_status']);
+        if (!$data) {
+            return resultArray(['error' => $this->member_model->getError()]);
+        }
+        return resultArray(['data' => '操作成功']);
+    }
+
     public function query()
     {
         $data = $this->adminCache['userInfo'];                                             //读取cache中的用户信息
