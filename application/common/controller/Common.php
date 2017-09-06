@@ -25,11 +25,12 @@ class Common extends Controller
 //            'http://www.alumni.app',
 //            'http://alumni.app',
 //            'http://localhost:8000',
-            'http://admin.jasonfj.com',
-            'http://api.jasonfj.com',
-            'http://alumni.jasonfj.com',
-            'http://www.jasonfj.com',
-            'http://jasonfj.com',
+//            'http://admin.jasonfj.com',
+//            'http://api.jasonfj.com',
+//            'http://alumni.jasonfj.com',
+//            'http://alumni-admin.jasonfj.com',
+//            'http://www.jasonfj.com',
+//            'http://jasonfj.com',
         ];
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             /* GET没有'HTTP_ORIGIN' */
@@ -44,14 +45,12 @@ class Common extends Controller
             $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
         }
 
-//        if(in_array($origin, $allow_origin) || $this->isOriginAllowed($origin, $_SERVER['HTTP_HOST'])) {
-        if(in_array($origin, $allow_origin)) {
+        if(in_array($origin, $allow_origin) || $this->isOriginAllowed($origin, 'jasonfj.com')) {
             header('Access-Control-Allow-Origin: ' . $origin);
         } else {
-            exit("CSRF protection in POST request: detected invalid Origin header: " . $origin);
+            exit('CSRF protection in POST request: detected invalid Origin header: ' . $origin);
         }
         /*防止跨域*/
-//        header('Access-Control-Allow-Origin: admin.jasonfj.com');
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, authKey');
