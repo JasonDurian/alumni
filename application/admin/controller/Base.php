@@ -38,8 +38,8 @@ class Base extends Common
         $param = $this->param;
         $username = $param['username'];
         $password = $param['password'];
-        $verifyCode = !empty($param['verifyCode'])? $param['verifyCode']: '';
-        $isRemember = !empty($param['isRemember'])? $param['isRemember']: '';
+        $verifyCode = !empty($param['verifyCode']) ? trim($param['verifyCode']) : '';
+        $isRemember = !empty($param['isRemember']) ? $param['isRemember'] : '';
         $data = $this->user_model->login($username, $password, $verifyCode, $isRemember);
         if (!$data) {
             return resultArray(['error' => $this->user_model->getError()]);
@@ -82,7 +82,9 @@ class Base extends Common
 
     public function getVerify()
     {
-        $captcha = new HonrayVerify(config('captcha'));
+        $config = config('captcha');
+        $config = $config ? : [];
+        $captcha = new HonrayVerify($config);
         return $captcha->entry();
     }
 

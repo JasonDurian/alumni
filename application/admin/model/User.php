@@ -199,7 +199,7 @@ class User extends Common
 			$this->error = '密码不能为空';
 			return false;
 		}
-        /*if (config('IDENTIFYING_CODE') && !$type) {
+        if (config('IDENTIFYING_CODE') && !$type) {
             if (!$verifyCode) {
 				$this->error = '验证码不能为空';
 				return false;
@@ -209,7 +209,7 @@ class User extends Common
 				$this->error = '验证码错误';
 				return false;
             }
-        }*/
+        }
 
 		$map['username'] = $username;
 		$userInfo = $this->where($map)->find();

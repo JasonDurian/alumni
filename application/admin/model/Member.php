@@ -98,7 +98,7 @@ class Member extends Common
 
 	    $data = $this->scope('memberCertified')
 	        ->view('Member', '*', 'MemberCertified.member_id=Member.member_id')
-    	    ->where(['Member.member_id' => $id, 'Member.status' => 1])
+    	    ->where(['Member.member_id' => $id])
     	    ->find();
 		if (!$data) {
 			$this->error = '暂无此数据';
