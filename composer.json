@@ -4,7 +4,8 @@
   "require" : {
     "php" : ">=5.4.0",
     "topthink/framework" : "^5.0",
-    "topthink/think-testing": "^1.0"
+    "topthink/think-testing": "^1.0",
+    "firebase/php-jwt": "^5.0"
   },
   "license" : "Apache-2.0",
   "keywords" : [ "framework", "thinkphp", "ORM" ],

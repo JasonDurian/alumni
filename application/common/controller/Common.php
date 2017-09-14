@@ -39,7 +39,7 @@ class Common extends Controller
             $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
         }
 
-        if(in_array($origin, $allow_origin) || $this->isOriginAllowed($origin, 'jasonfj.com')) {
+        if(in_array($origin, $allow_origin) || $this->isOriginAllowed($origin, config('cors_allow_origin'))) {
             header('Access-Control-Allow-Origin: ' . $origin);
         } else {
             exit('CSRF protection in POST request: detected invalid Origin header: ' . $origin);
@@ -48,7 +48,7 @@ class Common extends Controller
         /*防止跨域*/
         header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, authKey');
+        header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization, authKey');
         header('Content-Type:application/json; charset=utf-8');
         $param =  Request::instance()->param();            
         $this->param = $param;

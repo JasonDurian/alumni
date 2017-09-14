@@ -21,7 +21,7 @@ class Square extends ApiCommon
         $this->myself_id = $this->userCache['member_id'];
         
         // 更新缓存 为了释放不用的内存
-        cache('Auth_'.$this->authKey, $this->userCache, config('login_session_vaild'));
+//        cache('Auth_'.$this->authKey, $this->userCache, config('login_session_vaild'));
     }
     
     /**
@@ -136,7 +136,7 @@ class Square extends ApiCommon
 //         }
 
         $data['avatar']   = $this->userCache['avatar'];
-        $data['username'] = $this->userCache['name'] ? : $this->userCache['username'];
+        $data['username'] = $this->userCache['username'];
         return resultArray(['data' => $data]);
     }
     
@@ -152,7 +152,7 @@ class Square extends ApiCommon
         
         $param = $this->param;
         $param['commenter_id'] = $this->myself_id;
-        $param['commenter_name'] = $this->userCache['name'] ? : $this->userCache['username'];
+        $param['commenter_name'] = $this->userCache['username'];
         $data = $square_comment_model->createData($param);
         if (!$data) {
             return resultArray(['error' => $square_comment_model->getError()]);

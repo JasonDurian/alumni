@@ -59,7 +59,7 @@ class MemberCertified extends ApiCommon
         if ((!$data) || (!$userList)) {
             return resultArray(['error' => $this->member_certified_model->getError()]);
         }
-//        $userList['check_status'] = 2;
+        $userList['check_status'] = 2;
         return resultArray([
             'data' => [
                 'message'   => '信息保存成功，等待审核',
@@ -137,8 +137,20 @@ class MemberCertified extends ApiCommon
     protected function updateCache($id = 0)
     {
         /* 实时更新认证状态信息 */
-        $member_id = !empty($this->userCache['member_id']) ? $this->userCache['member_id'] : $id;
-        $check_status = $this->member_model->getCheckStatus($member_id);
+        if (!empty($id)) {
+            $data = $this->member_certified_model->getDataById($id);
+        } else {
+            $data = $this->member_certified_model->getDataByMemberId($this->userCache['member_id']);
+        }
+        if (!$data) {
+            return $this->userCache;
+        }
+        $userList = array_merge($this->userCache, json_decode($data, true));
+
+//        $member_id = $this->userCache['member_id'];
+//        $userList = $this->member_certified_model->getFullDataById($member_id);
+
+        /*$check_status = $this->member_model->getCheckStatus($member_id);
         if ($check_status) $this->userCache['check_status'] = $check_status;
 
         if (!empty($id)) {
@@ -151,9 +163,9 @@ class MemberCertified extends ApiCommon
         } else {
             $userList = $this->userCache;
         }
-        
+
         // 更新缓存 为了释放不用的内存
-        cache('Auth_'.$this->authKey, $userList, config('login_session_vaild'));
+        cache('Auth_'.$this->authKey, $userList, config('login_session_vaild'));*/
         return $userList;
     }
 }

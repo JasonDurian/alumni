@@ -21,7 +21,7 @@ class MemberComment extends ApiCommon
         $this->commenter_id = $this->userCache['member_id'];            //评论人一定是现在登录的用户
         
         // 更新缓存 为了释放不用的内存
-        cache('Auth_'.$this->authKey, $this->userCache, config('login_session_vaild'));
+//        cache('Auth_'.$this->authKey, $this->userCache, config('login_session_vaild'));
     }
     
     /**

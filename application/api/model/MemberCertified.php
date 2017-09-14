@@ -29,7 +29,7 @@ class MemberCertified extends Model
      */
     protected function scopeMember($query)
     {
-        $query->view('Member','avatar,check_status');
+        $query->view('Member','member_id,avatar,check_status');
     }
     
     /**
@@ -90,6 +90,23 @@ class MemberCertified extends Model
         }
         return $data;
     }
+
+    /**
+     * [getDataById 根据外键获取详情]
+     * @DateTime  2017-02-10T21:16:34+0800
+     * @param     int                   $member_id [外键]
+     * @return    [array]
+     */
+    public function getDataByMemberId($member_id = 0)
+    {
+        $data = $this->get(['member_id' => $member_id]);
+
+        if (!$data) {
+            $this->error = '暂无此数据';
+            return false;
+        }
+        return $data;
+    }
     
     /**
      * [getDataById 根据主键获取完整详情]
@@ -107,7 +124,7 @@ class MemberCertified extends Model
 //            ->find();
         $data = $this
             ->scope('member')
-	        ->view('MemberCertified','name,city,mobile,hide_mobile,email,wechat,qq,department,grade,work,company,position','MemberCertified.member_id=Member.member_id')
+	        ->view('MemberCertified','id,name,city,mobile,hide_mobile,email,wechat,qq,department,grade,work,company,position','MemberCertified.member_id=Member.member_id')
             ->where(['Member.member_id' => $member_id, 'Member.status' => 1])
             ->find();
         

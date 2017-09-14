@@ -12,6 +12,7 @@ use think\Model;
 use think\Session;
 // use app\admin\model\Common;
 use com\verify\HonrayVerify;
+use Firebase\JWT\JWT;
 
 class Member extends Model 
 {	
@@ -118,7 +119,14 @@ class Member extends Model
 			$this->error = '添加失败';
 			return false;
 		}*/
-	    
+
+        // 验证
+        $validate = validate($this->name);
+        if (!$validate->check($param)) {
+            $this->error = $validate->getError();
+            return false;
+        }
+
 	    $this->startTrans();
 	    try {
 	        
@@ -340,16 +348,30 @@ class Member extends Model
 //         }
 //         session_destroy();
 
-        Session::set('enname','jason');
-        $authKey = user_md5($userInfo['username'].$userInfo['password'].session_id());
+//        Session::set('enname','jason');
+//        $authKey = user_md5($userInfo['username'].$userInfo['password'].session_id());
         
         $userList = $this->getCertifiedInfo($userInfo);
         $info['userInfo'] = $userList;
-        $info['authKey'] = $authKey;
-        
-        cache('Auth_'.$authKey, null);
-        cache('Auth_'.$authKey, $userList, config('login_session_vaild'));
-        
+//        $info['authKey'] = $authKey;
+//
+//        cache('Auth_'.$authKey, null);
+//        cache('Auth_'.$authKey, $userList, config('login_session_vaild'));
+
+        /* JWT */
+        $secret_key = config('jwt_secret_key');
+        $token = array(
+            'iss' => 'Jason',
+            'aud' => 'jasonfj.com',
+            'iat' => time(),
+            'exp' => time() + config('login_session_vaild'),
+            'member_id' => $userList['member_id'],
+            'username' => $userList['username'],
+            'avatar' => $userList['avatar'],
+            'check_status' => $userList['check_status'],
+        );
+        $info['jwtSecret'] = JWT::encode($token, $secret_key);
+
         return $info;
     }
     
