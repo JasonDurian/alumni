@@ -36,6 +36,11 @@ class User extends Common
         return $this->belongsToMany('group', '__admin_access__', 'group_id', 'user_id');
     }
 
+    public function user_group()
+    {
+        return $this->hasMany('AdminAccess','user_id')->field('group_id');
+    }
+
     /**
      * [getDataList 列表]
      * @AuthorHTL
@@ -57,9 +62,9 @@ class User extends Common
 		$dataCount = $this->alias('user')->where($map)->count('id');
 		
 		$list = $this
-				->where($map)
+                ->where($map)
 				->alias('user')
-				->join('__ADMIN_STRUCTURE__ structure', 'structure.id=user.structure_id', 'LEFT')
+                ->join('__ADMIN_STRUCTURE__ structure', 'structure.id=user.structure_id', 'LEFT')
 				->join('__ADMIN_POST__ post', 'post.id=user.post_id', 'LEFT');
 		
 		// 若有分页
@@ -67,13 +72,26 @@ class User extends Common
 			$list = $list->page($page, $limit);
 		}
 
-		$list = $list 
+		$list = $list
 				->field('user.*,structure.name as s_name, post.name as p_name')
 				->select();
-		
+
+        /**
+         * Todo: 列表数据中一对多关系最佳处理方式？
+         */
+		foreach ($list AS $key => $value) {
+            $list[$key]['groups'] = Db::name('admin_access')
+                ->field('group_id')->where('user_id', $value['id'])->select();
+//            $value->user_group;
+        }
+
+		$groupList = Db::name('admin_group')
+            ->field('id, title, pid')->where('status', 1)->select();
+
 		$data['list'] = $list;
 		$data['dataCount'] = $dataCount;
-		
+		$data['groupList'] = $groupList;
+
 		return $data;
 	}
 
@@ -157,10 +175,10 @@ class User extends Common
 
 		try {
 			Db::name('admin_access')->where('user_id', $id)->delete();
+            $userGroups = [];
 			foreach ($param['groups'] as $k => $v) {
-				$userGroup['user_id'] = $id;
-				$userGroup['group_id'] = $v;
-				$userGroups[] = $userGroup;
+                $userGroups[$k]['user_id'] = $id;
+                $userGroups[$k]['group_id'] = $v;
 			}
 			Db::name('admin_access')->insertAll($userGroups);
 

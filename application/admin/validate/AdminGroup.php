@@ -9,7 +9,7 @@ class AdminGroup extends Validate{
 
 	protected $rule = array(
 		'title'   => 'require',
-		'rules'      => 'require',
+		'rules'   => 'require',
 	);
 	protected $message = array(
 		'title.require'    => '标题必须填写',

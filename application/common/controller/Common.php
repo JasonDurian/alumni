@@ -24,7 +24,7 @@ class Common extends Controller
 //            'http://api.alumni.app',
 //            'http://www.alumni.app',
 //            'http://alumni.app',
-//            'http://localhost:8000',
+            'http://localhost:8000',
         ];
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             /* GET没有'HTTP_ORIGIN' */

@@ -40,4 +40,12 @@ class Rule extends Common
 		return $data;
 	}
 
+	public function getNormalList()
+    {
+        $map = ['status' => 1];
+        $list = $this->where($map)->select();
+
+        return $list;
+    }
+
 }

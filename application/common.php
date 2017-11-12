@@ -57,3 +57,31 @@ function user_md5($str, $auth_key = '')
 {
     return '' === $str ? '' : md5(sha1($str) . $auth_key);
 }
+
+/**
+ * 生成符合antd树选择的格式
+ * @Author       Jason
+ * @CreateTime  2017/10/2 18:51
+ * @param array $list
+ * @param int $cid
+ * @return mixed
+ */
+function getAntdList($list = [], $cid = 0) {
+    $childs = [];
+    $n = 0;
+    foreach ($list AS $key => $category) {
+        if ($category['pid'] == $cid) {
+            $childs[$n]['label'] = $category['title'];
+            $childs[$n]['value'] = $childs[$n]['key'] = strval($category['id']);
+            $children = getAntdList($list, $category['id']);
+            if ($children !== false)
+                $childs[$n]['children'] = $children;
+            $n++;
+        }
+    }
+    if (empty($childs)) {
+        return false;
+    } else {
+        return $childs;
+    }
+}

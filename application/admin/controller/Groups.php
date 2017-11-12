@@ -9,77 +9,81 @@ namespace app\admin\controller;
 
 class Groups extends ApiCommon
 {
+    protected $group_model;
+    protected $rule_model;
+
+    protected function _initialize()
+    {
+        parent::_initialize();
+        $this->group_model = model('Group');
+        $this->rule_model  = model('Rule');
+    }
     
     public function index()
     {   
-        $groupModel = model('Group');
         $param = $this->param;
-        $data = $groupModel->getDataList();
+        $keywords = !empty($param['keywords']) ? $param['keywords']: '';
+        $data = $this->group_model->getDataList($keywords);
         return resultArray(['data' => $data]);
     }
 
     public function read()
     {   
-        $groupModel = model('Group');
         $param = $this->param;
-        $data = $groupModel->getDataById($param['id']);
+        $data = $this->group_model->getDataById($param['id']);
+        $data['ruleList'] = getAntdList($this->rule_model->getNormalList(), 0);
         if (!$data) {
-            return resultArray(['error' => $groupModel->getError()]);
+            return resultArray(['error' => $this->group_model->getError()]);
         } 
         return resultArray(['data' => $data]);
     }
 
     public function save()
     {
-        $groupModel = model('Group');
         $param = $this->param;
-        $data = $groupModel->createData($param);
+        $data = $this->group_model->createData($param);
         if (!$data) {
-            return resultArray(['error' => $groupModel->getError()]);
+            return resultArray(['error' => $this->group_model->getError()]);
         } 
         return resultArray(['data' => '添加成功']);
     }
 
     public function update()
     {
-        $groupModel = model('Group');
         $param = $this->param;
-        $data = $groupModel->updateDataById($param, $param['id']);
+        $data = $this->group_model->updateDataById($param, $param['id']);
         if (!$data) {
-            return resultArray(['error' => $groupModel->getError()]);
+            return resultArray(['error' => $this->group_model->getError()]);
         } 
         return resultArray(['data' => '编辑成功']);
     }
 
     public function delete()
     {
-        $groupModel = model('Group');
         $param = $this->param;
-        $data = $groupModel->delDataById($param['id'], true);       
+        $data = $this->group_model->delDataById($param['id'], true);       
         if (!$data) {
-            return resultArray(['error' => $groupModel->getError()]);
+            return resultArray(['error' => $this->group_model->getError()]);
         } 
         return resultArray(['data' => '删除成功']);    
     }
 
     public function deletes()
     {
-        $groupModel = model('Group');
         $param = $this->param;
-        $data = $groupModel->delDatas($param['ids'], true);  
+        $data = $this->group_model->delDatas($param['ids'], true);  
         if (!$data) {
-            return resultArray(['error' => $groupModel->getError()]);
+            return resultArray(['error' => $this->group_model->getError()]);
         } 
         return resultArray(['data' => '删除成功']); 
     }
 
     public function enables()
     {
-        $groupModel = model('Group');
         $param = $this->param;
-        $data = $groupModel->enableDatas($param['ids'], $param['status'], true);  
+        $data = $this->group_model->enableDatas($param['ids'], $param['status'], true);  
         if (!$data) {
-            return resultArray(['error' => $groupModel->getError()]);
+            return resultArray(['error' => $this->group_model->getError()]);
         } 
         return resultArray(['data' => '操作成功']);         
     }

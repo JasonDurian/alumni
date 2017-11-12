@@ -25,6 +25,9 @@ class Users extends ApiCommon
         $page = !empty($param['page']) ? $param['page']: 1;
         $limit = !empty($param['limit']) ? $param['limit']: 10;
         $data = $this->user_model->getDataList($keywords, $page, $limit, $time);
+
+        $data['groupList'] = getAntdList($data['groupList'], 0);
+
         return resultArray(['data' => $data]);
     }
 

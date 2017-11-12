@@ -23,11 +23,20 @@ class Group extends Common
 	 * @DateTime  2017-02-10T21:07:18+0800
 	 * @return    [array]                         
 	 */
-	public function getDataList()
+	public function getDataList($keywords = '')
 	{
+        $map = [];
+        if ($keywords) {
+            $map['title|remark'] = ['like', '%'.$keywords.'%'];
+        }
+
+        $dataCount = $this->where($map)->count('id');
+
 		$cat = new \com\Category('admin_group', array('id', 'pid', 'title', 'title'));
-		$data = $cat->getList('', 0, 'id');
-		
+        $list = $cat->getList($map, 0, 'id');
+
+        $data['list'] = $list;
+        $data['dataCount'] = $dataCount;
 		return $data;
 	}
 }
