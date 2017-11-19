@@ -30,11 +30,13 @@ class Groups extends ApiCommon
     public function read()
     {   
         $param = $this->param;
-        $data = $this->group_model->getDataById($param['id']);
+        if ($param['id'] > 0) {
+            $data = $this->group_model->getDataById($param['id']);
+            if (!$data) {
+                return resultArray(['error' => $this->group_model->getError()]);
+            }
+        }
         $data['ruleList'] = getAntdList($this->rule_model->getNormalList(), 0);
-        if (!$data) {
-            return resultArray(['error' => $this->group_model->getError()]);
-        } 
         return resultArray(['data' => $data]);
     }
 
